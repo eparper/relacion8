@@ -34,3 +34,17 @@ require_once(RUTABASE."/scripts/librerias/validacion.php");
 //creo todos los objetos que necesita mi aplicación
 
 
+const COLORESTEXTO = [
+    "blanco" => "rgb(255, 255, 255)",
+    "rojo" => "rgb(255, 0, 0)",
+    "verde" => "rgb(0, 255, 0)",
+    "rosa" => "rgb(255, 192, 203)",
+    "azul" => "rgb(0, 110, 255)"
+];
+
+const COLORESFONDO = [
+    "negro" => "rgb(0, 0, 0)",
+    "blanco" => "rgb(255, 255, 255)",
+    "azul" => "rgb(0, 110, 255)",
+    "rojo" => "rgb(255, 0, 0)"
+];

@@ -8,7 +8,7 @@ $barraUbicacion = [
         "url" => "/index.php"
     ],
     [
-        "nombre" => "Pruebas"
+        "nombre" => "Index"
     ],
     
 ];
@@ -16,11 +16,12 @@ $barraUbicacion = [
 
 
 
+
 //dibuja la plantilla de la vista
-inicioCabecera("PROYECTO");
+inicioCabecera("RELACIÓN 8");
 cabecera();
 finCabecera();
-inicioCuerpo("PROYECTO", $barraUbicacion);
+inicioCuerpo("RELACIÓN 8", $barraUbicacion);
 cuerpo(); //llamo a la vista
 finCuerpo();
 // **********************************************************
@@ -32,11 +33,14 @@ function cuerpo()
 ?>
     <br><br>
     
-<?php
+    <?php 
 
+    echo "Hola mundo";        
 
     
 
 
 
+
 }
+
