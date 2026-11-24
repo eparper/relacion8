@@ -35,6 +35,7 @@ require_once(RUTABASE."/scripts/librerias/validacion.php");
 
 
 const COLORESTEXTO = [
+    "negro" => "rgb(0, 0, 0)",
     "blanco" => "rgb(255, 255, 255)",
     "rojo" => "rgb(255, 0, 0)",
     "verde" => "rgb(0, 255, 0)",
@@ -43,8 +44,15 @@ const COLORESTEXTO = [
 ];
 
 const COLORESFONDO = [
-    "negro" => "rgb(0, 0, 0)",
     "blanco" => "rgb(255, 255, 255)",
+    "negro" => "rgb(0, 0, 0)",
     "azul" => "rgb(0, 110, 255)",
     "rojo" => "rgb(255, 0, 0)"
 ];
+
+// const COLORESFONDO = [
+//     "negro" => "black",
+//     "blanco" => "white",
+//     "azul" => "blue",
+//     "rojo" => "red"
+// ];

@@ -13,60 +13,132 @@ $barraUbicacion = [
     
 ];
 
+$errores = [];
+$datos = [];
 
+//antes de todo, comprobamos si las cookies existen y si no, ponemos los colores por defecto
+if (isset($_COOKIE["fondo"])) {
+    $datos["fondo"] = $_COOKIE["fondo"];
+}
+else { //si no hay cookie lo ponemos en blanco por defecto
+    $datos["fondo"] = "blanco";
+}
+
+//lo mismo para el color de texto
+if (isset($_COOKIE["texto"])) {
+    $datos["texto"] = $_COOKIE["texto"];
+}
+else { //si no hay cookie lo ponemos en negro por defecto
+    $datos["texto"] = "negro";
+}
+
+$colorFondoSeleccionado = $datos["fondo"];
+$colorTextoSeleccionado = $datos["texto"];
+
+//si pulsamos en Aceptar
+if (isset($_POST["aceptar"])) {
+
+    if (isset($_POST["comboColorFondo"])) {
+        $colorFondo = $_POST["comboColorFondo"];
+        $datos["fondo"] = $colorFondo;
+
+        setcookie("fondo", $datos["fondo"]);
+       
+    }
+
+    if (isset($_POST["comboColorTexto"])) {
+        $colorTexto = $_POST["comboColorTexto"];
+        $datos["texto"] = $colorTexto;
+
+        
+        setcookie("texto", $datos["texto"]);
+    }
+
+    //hay que recargar para que se vean los cambios 
+    header("Location: /aplicacion/personalizar/personalizar.php");
+    exit;
+}
 
 
 
 //dibuja la plantilla de la vista
 inicioCabecera("RELACIÓN 8");
-cabecera();
+cabecera($datos);
 finCabecera();
 inicioCuerpo("RELACIÓN 8", $barraUbicacion);
-cuerpo(); //llamo a la vista
+cuerpo($colorFondoSeleccionado, $colorTextoSeleccionado); //llamo a la vista
 finCuerpo();
 // **********************************************************
 //vista
-function cabecera() {}
+function cabecera(array $datos) {
+
+    
+
+    ?>
+    <style>
+        #documento {
+            background-color: <?php echo COLORESFONDO[$datos["fondo"]]; ?>;
+            color: <?php echo COLORESTEXTO[$datos["texto"]]; ?>;
+        }
+    </style>
+    <?php
+}
 //vista
-function cuerpo()
+function cuerpo(string $colorFondoSeleccionado, string $colorTextoSeleccionado)
 {
 ?>
     <br><br>
 
-    <!-- <style>
-        .tarjeta {
-            background-color: ;
-        }
-    </style> -->
-
-    <label for="comboColorFondo">Color de fondo: </label>
-    <select name="comboColorFondo">
-        <?php 
-        
-        foreach (COLORESFONDO as $colorFondo => $rgb) {
-
-            ?>
-            <option value="<?= $colorFondo ?>"><?= $colorFondo ?></option>
-            <?php
-        }
-        
-        ?>
-    </select> <br>
-
-    <label for="comboColorTexto">Color de texto: </label>
-    <select name="comboColorTexto">
-        <?php 
-        
-        foreach (COLORESTEXTO as $colorTexto => $rgb) {
-
-            ?>
-            <option value="<?= $colorTexto ?>"><?= $colorTexto ?></option>
-            <?php
-        }
-        
-        ?>
-    </select>
     
+
+    <form action="" method="post">
+        <label for="comboColorFondo">Color de fondo: </label>
+        <select name="comboColorFondo">
+            <?php 
+            
+            
+            foreach (COLORESFONDO as $colorFondo => $rgb) {
+                
+                if (isset($_COOKIE["fondo"]) && $colorFondo == $_COOKIE["fondo"]) {
+                    ?>
+                    <option value="<?= $colorFondo ?>" selected><?= $colorFondo ?></option>
+                    <?php
+                }   
+                else {
+                    ?>
+                    <option value="<?= $colorFondo ?>"><?= $colorFondo ?></option>
+                    <?php
+                } 
+                
+                
+            }
+            
+            ?>
+        </select> <br>
+
+        <label for="comboColorTexto">Color de texto: </label>
+        <select name="comboColorTexto">
+            <?php 
+            $existeColorTexto = false;
+            
+            foreach (COLORESTEXTO as $colorTexto => $rgb) {
+                if (isset($_COOKIE["texto"]) && $colorTexto == $_COOKIE["texto"]) {
+                    ?>
+                    <option value="<?= $colorTexto ?>" selected><?= $colorTexto ?></option>
+                    <?php
+                }   
+                else {
+                    ?>
+                    <option value="<?= $colorTexto ?>"><?= $colorTexto ?></option>
+                    <?php
+                } 
+            }
+            
+            ?>
+        </select>
+
+        <input type="submit" class="boton" value="Aceptar" name="aceptar">
+    </form>
     <?php 
 
             
