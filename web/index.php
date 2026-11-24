@@ -34,6 +34,7 @@ function cuerpo()
 {
 ?>
     <br><br>
-    
+    <a href="./aplicacion/personalizar/index.php">Página index</a><br>
+    <a href="./aplicacion/personalizar/personalizar.php">Página personalizar</a>
 <?php
 }
