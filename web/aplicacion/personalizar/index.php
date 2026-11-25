@@ -31,14 +31,23 @@ else { //si no hay cookie lo ponemos en negro por defecto
     $datos["texto"] = "negro";
 }
 
-
+//VISITAS
+if (isset($_COOKIE["visitas"])) {
+    $contadorVisitas = $_COOKIE["visitas"];
+    $contadorVisitas++;
+    setcookie("visitas", $contadorVisitas); //le ponemos el valor nuevo a la cookie
+}
+else {
+    $contadorVisitas = 1;
+    setcookie("visitas", $contadorVisitas); //la cookie guarda el value en texto
+}
 
 //dibuja la plantilla de la vista
 inicioCabecera("RELACIÓN 8");
 cabecera($datos);
 finCabecera();
 inicioCuerpo("RELACIÓN 8", $barraUbicacion);
-cuerpo(); //llamo a la vista
+cuerpo($contadorVisitas); //llamo a la vista
 finCuerpo();
 // **********************************************************
 //vista
@@ -54,16 +63,16 @@ function cabecera(array $datos) {
     <?php
 }
 //vista
-function cuerpo()
+function cuerpo(int $contadorVisitas)
 {
 ?>
     <br><br>
     
     <?php 
 
-    echo "Hola mundo";        
+    echo "Hola mundo <br>";        
 
-    
+    echo "Visitas: $contadorVisitas <br>".PHP_EOL;
 
 
 

@@ -13,7 +13,7 @@ if (MODO_TRABAJO=="produccion")
         error_reporting(E_ALL & ~E_DEPRECATED);  
 
 spl_autoload_register(function ($clase){
-    $ruta=RUTABASE."/aplicacion/clases/curso2026/";
+    $ruta=RUTABASE."/aplicacion/clases/";
     $fichero=$ruta."$clase.php";
     
     if (file_exists($fichero))
@@ -56,3 +56,6 @@ const COLORESFONDO = [
 //     "azul" => "blue",
 //     "rojo" => "red"
 // ];
+
+//array textos 
+$textos = [];

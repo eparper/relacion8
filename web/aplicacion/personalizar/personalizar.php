@@ -8,7 +8,7 @@ $barraUbicacion = [
         "url" => "/index.php"
     ],
     [
-        "nombre" => "Tienda"
+        "nombre" => "Personalizar"
     ],
     
 ];

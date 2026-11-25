@@ -70,6 +70,7 @@ function inicioCuerpo(string $cabecera, array $barraUbicacion = [])
                     <!-- <li><a href="/aplicacion/principal/pruebas.php">Pruebas</a></li> -->
                     <li><a href="/aplicacion/personalizar/index.php">Index</a></li>
                     <li><a href="/aplicacion/personalizar/personalizar.php">Personalizar</a></li>
+                    <li><a href="/aplicacion/texto/verTextos.php">Ver Textos</a></li>
                  </ul> 
                 
             </div>
