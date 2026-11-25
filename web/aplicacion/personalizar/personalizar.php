@@ -42,7 +42,7 @@ if (isset($_POST["aceptar"])) {
         $colorFondo = $_POST["comboColorFondo"];
         $datos["fondo"] = $colorFondo;
 
-        setcookie("fondo", $datos["fondo"]);
+        setcookie("fondo", $datos["fondo"], time() + 60 * 60 * 24 * 3, "/");
        
     }
 
@@ -51,7 +51,7 @@ if (isset($_POST["aceptar"])) {
         $datos["texto"] = $colorTexto;
 
         
-        setcookie("texto", $datos["texto"]);
+        setcookie("texto", $datos["texto"], time() + 60 * 60 * 24 * 3, "/");
     }
 
     //hay que recargar para que se vean los cambios 

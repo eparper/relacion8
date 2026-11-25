@@ -35,11 +35,12 @@ else { //si no hay cookie lo ponemos en negro por defecto
 if (isset($_COOKIE["visitas"])) {
     $contadorVisitas = $_COOKIE["visitas"];
     $contadorVisitas++;
-    setcookie("visitas", $contadorVisitas); //le ponemos el valor nuevo a la cookie
+    setcookie("visitas", $contadorVisitas, time() + 60 * 60 * 24 * 3, "/"); //le ponemos el valor nuevo a la cookie
 }
 else {
     $contadorVisitas = 1;
-    setcookie("visitas", $contadorVisitas); //la cookie guarda el value en texto
+    setcookie("visitas", $contadorVisitas, time() + 60 * 60 * 24 * 3, "/"); //la cookie guarda el value en texto
+    //le ponemos / para que esté en todas partes
 }
 
 //dibuja la plantilla de la vista

@@ -13,6 +13,17 @@ $barraUbicacion = [
     
 ];
 
+//si existe la sesión textos:
+if (isset($_SESSION["textos"])) { //se guardará en sesión una copia del array $textos
+    $textos = $_SESSION["textos"];
+}
+else { //si no existe, creamos el array vacío:
+
+    //array textos 
+    $textos = [];
+}
+
+
 $errores = [];
 
 if (isset($_POST["registrar"])) {
@@ -36,12 +47,18 @@ if (isset($_POST["registrar"])) {
         //añadimos al array que está en la cabecera:
         array_push($textos, $obTexto);
 
-        
+        $_SESSION["textos"] = $textos;
 
 
     }
 
 
+}
+
+if (isset($_POST["limpiar"])) {
+
+    $textos = [];
+    $_SESSION["textos"] = $textos;
 }
 
 //dibuja la plantilla de la vista
@@ -88,16 +105,20 @@ function formulario(array $errores, array $textosRegistrados) {
         <label for="inputTexto">Introduce el texto:</label>
         <input type="text" name="inputTexto"><?php muestraErrores($errores, "texto"); ?>
 
-        <textarea name="taTextos" cols="70" readonly><?php 
+        <input type="submit" value="Registrar" name="registrar">
+
+        <input type="submit" value="Limpiar" name="limpiar">
+
+        <textarea name="taTextos" cols="70" rows="20" readonly><?php 
                 foreach ($textosRegistrados as $texto) {
 
-                    echo $texto->getCadena() . "\n";
+                    echo $texto->getCadena() . " " . $texto->getFechaHora()->format("d/m/Y H:i:s") . "\n";
                 }
             
             ?>
         </textarea><br>
 
-        <input type="submit" value="Registrar" name="registrar">
+        
 
     </form>
 
@@ -131,3 +152,4 @@ function muestraErrores (array $errores, string $nombreCampo):void {
         
     }
 }
+

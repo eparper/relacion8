@@ -57,5 +57,6 @@ const COLORESFONDO = [
 //     "rojo" => "red"
 // ];
 
-//array textos 
-$textos = [];
+//iniciar sesión 
+session_start();
+
