@@ -12,18 +12,38 @@ if (MODO_TRABAJO=="produccion")
     else 
         error_reporting(E_ALL & ~E_DEPRECATED);  
 
-spl_autoload_register(function ($clase){
-    $ruta=RUTABASE."/aplicacion/clases/";
-    $fichero=$ruta."$clase.php";
+// spl_autoload_register(function ($clase){
+//     $ruta=RUTABASE."/aplicacion/clases/";
+//     $fichero=$ruta."$clase.php";
     
-    if (file_exists($fichero))
-        {
-            require_once($fichero);
+//     if (file_exists($fichero))
+//         {
+//             require_once($fichero);
+//         }
+//       else
+//         {
+//             throw new Exception("La clase $clase no se ha encontrado.");
+//         }
+// });
+
+//para autocarga de muchas carpetas:
+spl_autoload_register(function ($clase){
+    $carpetas = [
+        RUTABASE . "/aplicacion/clases/",
+        RUTABASE . "/scripts/clases/"
+    ];
+
+    foreach ($carpetas as $ruta) {
+        $fichero = $ruta . "$clase.php";
+
+        // Si encontramos el archivo en esta carpeta, lo cargamos y salimos de la función
+        if (file_exists($fichero)) {
+            require_once $fichero;
+            return; // Éxito: detenemos el autoload para esta clase
         }
-      else
-        {
-            throw new Exception("La clase $clase no se ha encontrado.");
-        }
+    }
+
+    throw new Exception("La clase '$clase' no se ha encontrado en ninguna de las rutas configuradas.");
 });
 
 
