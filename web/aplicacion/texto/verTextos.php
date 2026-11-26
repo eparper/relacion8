@@ -1,5 +1,10 @@
 <?php
 include_once(dirname(__FILE__) . "/../../cabecera.php");
+
+if (!$acceso->hayUsuario()) {
+    header("Location: /aplicacion/acceso/login.php");
+}
+
 //controlador
 
 $barraUbicacion = [
@@ -23,17 +28,20 @@ else { //si no existe, creamos el array vacío:
     $textos = [];
 }
 
-
+//matriz de errores
 $errores = [];
 
+//si pulsamos en registrar
 if (isset($_POST["registrar"])) {
 
     
-
+    //si existe el inputTexto
     if (isset($_POST["inputTexto"])) {
+
 
         $texto = $_POST["inputTexto"];
 
+        //comprobamos si el texto todo junto no es nada, por si hay espacios le hacemos el mb_trim
         if (mb_trim($texto) == "") {
             $errores["texto"][] = "La cadena de texto no es válida";
         }  
@@ -47,7 +55,7 @@ if (isset($_POST["registrar"])) {
         //añadimos al array que está en la cabecera:
         array_push($textos, $obTexto);
 
-        $_SESSION["textos"] = $textos;
+        $_SESSION["textos"] = $textos; //se actualiza el array textos en la sesión
 
 
     }
@@ -55,6 +63,7 @@ if (isset($_POST["registrar"])) {
 
 }
 
+//botón limpiar que vacía el array de los textos y actualiza el array en la sesión
 if (isset($_POST["limpiar"])) {
 
     $textos = [];

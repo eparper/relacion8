@@ -2,6 +2,8 @@
 
     /**
      * Primero hay que validar por esta clase ACL Array
+     * Cuando se quiere comprobar si existe un usuario o no, crear un usuario, crear un role, obtener 
+     * la información de un usuario, se usa el objeto de la clase ACL. 
      */
     class ACLArray extends ACLBase
     {
@@ -36,13 +38,13 @@
         function __construct()
         {
             //añade los roles
-            $this->anadirRole("normales",[1=>true]);
-            $this->anadirRole("administradores",[1=>true,2=>true]);
+            $this->anadirRole("normales",[]);
+            $this->anadirRole("administradores",[1=>true]);
             
             //añade los usuario
-            $this->anadirUsuario("Es usuario alumno","alumno","alum",
+            $this->anadirUsuario("Alumno","alumno","alum",
                                       $this->getCodRole("normales"));
-            $this->anadirUsuario("Es usuario profesor","profesor","profe",
+            $this->anadirUsuario("Profesor","profesor","profe",
                                       $this->getCodRole("administradores"));
             $this->anadirUsuario("Noemí Parejo","noemi","noe",
                                       $this->getCodRole("administradores"));
@@ -464,7 +466,7 @@
             if (!$this->existeCodUsuario($codUsuario))
                  return false;
 
-            if (!$this->existeCodRole($role))
+            if (!$this->existeRole($role))
                  return false;
     
             $this->_usuarios[$codUsuario]["cod_role"]=$role;

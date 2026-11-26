@@ -2,6 +2,18 @@
 include_once(dirname(__FILE__) . "/../../cabecera.php");
 //controlador
 
+if (!$acceso->hayUsuario()) { //si no hay sesión iniciada, te lleva a login
+    header("Location: /aplicacion/acceso/login.php");
+    exit; 
+}
+
+if (!$acceso->puedePermiso(1)) {
+    paginaError("Error de permisos");
+    exit; //importante el exit!!!
+}
+
+
+
 $barraUbicacion = [
     [
         "nombre" => "Inicio",
@@ -32,25 +44,28 @@ else { //si no hay cookie lo ponemos en negro por defecto
     $datos["texto"] = "negro";
 }
 
-$colorFondoSeleccionado = $datos["fondo"];
-$colorTextoSeleccionado = $datos["texto"];
+// $colorFondoSeleccionado = $datos["fondo"];
+// $colorTextoSeleccionado = $datos["texto"];
 
 //si pulsamos en Aceptar
 if (isset($_POST["aceptar"])) {
 
+    //si existe comboColorFondo:
     if (isset($_POST["comboColorFondo"])) {
-        $colorFondo = $_POST["comboColorFondo"];
-        $datos["fondo"] = $colorFondo;
+        $colorFondo = $_POST["comboColorFondo"]; //cogemos el color seleccionado
+        $datos["fondo"] = $colorFondo; //guardamos el color seleccionado en el array datos
 
+        //actualizamos la cookie con el color seleccionado
         setcookie("fondo", $datos["fondo"], time() + 60 * 60 * 24 * 3, "/");
        
     }
 
+    //si existe el comboColorTexto
     if (isset($_POST["comboColorTexto"])) {
-        $colorTexto = $_POST["comboColorTexto"];
-        $datos["texto"] = $colorTexto;
+        $colorTexto = $_POST["comboColorTexto"]; //seleccionamos el color del texto
+        $datos["texto"] = $colorTexto; //guardamos el color seleccionado en el array datos
 
-        
+        //actualizamos la cookie con el color seleccionado
         setcookie("texto", $datos["texto"], time() + 60 * 60 * 24 * 3, "/");
     }
 
@@ -66,13 +81,11 @@ inicioCabecera("RELACIÓN 8");
 cabecera($datos);
 finCabecera();
 inicioCuerpo("RELACIÓN 8", $barraUbicacion);
-cuerpo($colorFondoSeleccionado, $colorTextoSeleccionado); //llamo a la vista
+cuerpo(); //llamo a la vista
 finCuerpo();
 // **********************************************************
 //vista
 function cabecera(array $datos) {
-
-    
 
     ?>
     <style>
@@ -84,7 +97,7 @@ function cabecera(array $datos) {
     <?php
 }
 //vista
-function cuerpo(string $colorFondoSeleccionado, string $colorTextoSeleccionado)
+function cuerpo()
 {
 ?>
     <br><br>
@@ -96,15 +109,16 @@ function cuerpo(string $colorFondoSeleccionado, string $colorTextoSeleccionado)
         <select name="comboColorFondo">
             <?php 
             
-            
+            //rellenamos el combo
             foreach (COLORESFONDO as $colorFondo => $rgb) {
-                
+                //si existe la cookie del fondo y el color que estamos recorriendo es igual al de la cookie, se pone en seleccionado (selected)
                 if (isset($_COOKIE["fondo"]) && $colorFondo == $_COOKIE["fondo"]) {
                     ?>
                     <option value="<?= $colorFondo ?>" selected><?= $colorFondo ?></option>
                     <?php
                 }   
                 else {
+                    //si no existe la cookie, no se pone en seleccionado
                     ?>
                     <option value="<?= $colorFondo ?>"><?= $colorFondo ?></option>
                     <?php
@@ -119,15 +133,18 @@ function cuerpo(string $colorFondoSeleccionado, string $colorTextoSeleccionado)
         <label for="comboColorTexto">Color de texto: </label>
         <select name="comboColorTexto">
             <?php 
-            $existeColorTexto = false;
+            
             
             foreach (COLORESTEXTO as $colorTexto => $rgb) {
+                //si existe la cookie del texto y el color que estamos recorriendo es igual al de la cookie, 
+                //se pone en seleccionado (selected)
                 if (isset($_COOKIE["texto"]) && $colorTexto == $_COOKIE["texto"]) {
                     ?>
                     <option value="<?= $colorTexto ?>" selected><?= $colorTexto ?></option>
                     <?php
                 }   
                 else {
+                    //si no existe la cookie, no se pone en seleccionado
                     ?>
                     <option value="<?= $colorTexto ?>"><?= $colorTexto ?></option>
                     <?php

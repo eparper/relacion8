@@ -80,3 +80,7 @@ const COLORESFONDO = [
 //iniciar sesión 
 session_start();
 
+//el objeto de la clase Acceso, se crea aquí para tenerlo en todas partes
+$acceso = new Acceso();
+//el objeto de la clase del ACL para tenerlo en todas partes
+$acl = new ACLArray();

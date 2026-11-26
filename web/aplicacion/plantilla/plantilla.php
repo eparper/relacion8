@@ -3,7 +3,7 @@
 function paginaError($mensaje)
 {
   header("HTTP/1.0 404 $mensaje");
-  inicioCabecera("PRACTICA");
+  inicioCabecera("ERROR");
   finCabecera();
   inicioCuerpo("ERROR");
   echo "<br />\n";
@@ -62,15 +62,40 @@ function inicioCuerpo(string $cabecera, array $barraUbicacion = [])
             </header>
             
             <div id="barraLogin">
+                <?php 
+                    //si hay sesión iniciada
+                    if ($acceso->hayUsuario()) {
+                        echo $acceso->getNombre(); //ponemos el nombre en la barra login
+                        echo "  ";
+                        //ponemos el enlace de Cerrar sesión cuando esté iniciada
+                        echo '<a href="/aplicacion/acceso/loggout.php">Cerrar sesión</a>';
+                    }
+                    else //si NO hay sesión iniciada, se pone el enlace de Iniciar sesión:
+                        echo '<a href="/aplicacion/acceso/login.php">Iniciar sesión</a>';
+                
+                ?>
                 
             </div>
             <div id="barraMenu">
                 <ul>
                     <li><a href="/index.php">Inicio</a></li>
-                    <!-- <li><a href="/aplicacion/principal/pruebas.php">Pruebas</a></li> -->
-                    <li><a href="/aplicacion/personalizar/index.php">Index</a></li>
-                    <li><a href="/aplicacion/personalizar/personalizar.php">Personalizar</a></li>
-                    <li><a href="/aplicacion/texto/verTextos.php">Ver Textos</a></li>
+
+                    <?php 
+                        if ($acceso->hayUsuario()) { //si hay sesión iniciada, se muestran index y ver textos
+                            ?>
+                            <li><a href="/aplicacion/personalizar/index.php">Index</a></li>
+                            <li><a href="/aplicacion/texto/verTextos.php">Ver Textos</a></li>
+                            <?php
+                            //si hay sesión iniciada y además tienes el permiso 1, se muestra también Personalizar
+                            if ($acceso->puedePermiso(1)) {
+                            ?>
+                                <li><a href="/aplicacion/personalizar/personalizar.php">Personalizar</a></li>
+                                
+                            <?php } ?>
+                            
+
+                    <?php } ?>
+
                  </ul> 
                 
             </div>

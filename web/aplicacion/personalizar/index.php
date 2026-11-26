@@ -2,6 +2,10 @@
 include_once(dirname(__FILE__) . "/../../cabecera.php");
 //controlador
 
+if (!$acceso->hayUsuario()) {
+    header("Location: /aplicacion/acceso/login.php");
+}
+
 $barraUbicacion = [
     [
         "nombre" => "Inicio",
@@ -32,13 +36,14 @@ else { //si no hay cookie lo ponemos en negro por defecto
 }
 
 //VISITAS
-if (isset($_COOKIE["visitas"])) {
-    $contadorVisitas = $_COOKIE["visitas"];
-    $contadorVisitas++;
+if (isset($_COOKIE["visitas"])) { //si existe la cookie
+    $contadorVisitas = $_COOKIE["visitas"]; //recogemos el valor de la cookie
+    $contadorVisitas++; //actualizamos el valor de la cookie
+    //y actualizamos la cookie
     setcookie("visitas", $contadorVisitas, time() + 60 * 60 * 24 * 3, "/"); //le ponemos el valor nuevo a la cookie
 }
-else {
-    $contadorVisitas = 1;
+else { //si NO existe la cookie
+    $contadorVisitas = 1; //iniciamos el contador a 1 porque siempre será una visita al empezar
     setcookie("visitas", $contadorVisitas, time() + 60 * 60 * 24 * 3, "/"); //la cookie guarda el value en texto
     //le ponemos / para que esté en todas partes
 }

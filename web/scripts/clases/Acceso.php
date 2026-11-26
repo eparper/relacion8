@@ -1,6 +1,8 @@
 <?php 
 /**
  * Clase Acceso para Registrar usuarios en mi aplicación
+ * Cuando se valida un usuario (introduce su Nick y contraseña), primero se comprueba con 
+ * ACL y después se guarda su información en la sesión con el objeto de la clase Acceso. 
  */
 class Acceso {
     
@@ -45,6 +47,8 @@ class Acceso {
      {
          $_SESSION["acceso"]["validado"]=false;
      }
+
+     return true;
     }
     
     /**
@@ -121,6 +125,9 @@ class Acceso {
      * @return boolean Devuelve true si hay usuario registrado. False en caso contrario
      */
     public function hayUsuario():bool {
+
+        return $this->_validado;
+
      }
     
     
@@ -132,6 +139,14 @@ class Acceso {
      */
     public function puedePermiso(int $numero):bool {
        
+        if (!$this->hayUsuario())
+            return false;
+
+        if (!validaRango($numero, $this->_permisos, 2))
+            return false;
+
+        return $this->_permisos[$numero]; //directamente devolvemos el true o false del permiso
+
     }
     
     
@@ -146,7 +161,10 @@ class Acceso {
       */
     public function getNick():string|false 
     { 
-       
+       if (!$this->hayUsuario())
+            return false;
+        
+        return $this->_nick; 
     }
   
     /**

@@ -7,12 +7,19 @@ class RegistroTexto {
     private string $_cadena;
     private DateTime $_fechaHora;
 
+    /**
+     * Constructor de RegistroTexto al que se le pasa
+     * una cadena y registra la fecha - hora de cuando se ha escrito el texto
+     *
+     * @param string $cad Se le pasa una cadena del texto a registrar
+     */
     public function __construct(string $cad) 
     {
         $this->_cadena = $cad;
         $this->_fechaHora = new DateTime();
     }
 
+    //getters
     public function getCadena():string {
         return $this->_cadena;
     }
