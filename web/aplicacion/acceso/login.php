@@ -44,9 +44,19 @@ if (isset($_POST["aceptar"])) {
                 $errores["Login"][] = "No se ha podido registrar el usuario";
             }
             else {
+                $destino = "/index.php";
+
+                //si existe la sesión con página actual, se modifica el destino 
+                //y luego se borra la sesión para que no exista siempre la sesión
+                //y siempre que hagas login no te lleve a la página que hayas guardado en sesión.
+                if (isset($_SESSION["paginaActual"])) {
+                    $destino = $_SESSION["paginaActual"];
+                    unset($_SESSION["paginaActual"]);
+                }
+
                 //si se ha iniciado sesión, se redirecciona al inicio, y depende del usuario
                 //se mostrarán unas páginas u otras
-                header("Location: /index.php");
+                header("Location: $destino"); 
                 exit;
             }
             

@@ -84,3 +84,4 @@ session_start();
 $acceso = new Acceso();
 //el objeto de la clase del ACL para tenerlo en todas partes
 $acl = new ACLArray();
+

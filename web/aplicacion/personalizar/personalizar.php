@@ -3,6 +3,9 @@ include_once(dirname(__FILE__) . "/../../cabecera.php");
 //controlador
 
 if (!$acceso->hayUsuario()) { //si no hay sesión iniciada, te lleva a login
+    //se guarda siempre la ruta en la que estamos para que al cerrar sesión, 
+    //se guarde la página en la que estábamos
+    $_SESSION["paginaActual"] = $_SERVER["REQUEST_URI"];
     header("Location: /aplicacion/acceso/login.php");
     exit; 
 }
